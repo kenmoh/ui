@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   Box,
-  Divider,
   Drawer,
   IconButton,
   List,
@@ -13,14 +12,12 @@ import {
   useTheme,
 } from "@mui/material";
 import {
-  SettingsOutlined,
   ChevronLeft,
   ChevronRightOutlined,
   HomeOutlined,
   TodayOutlined,
   CalendarMonthOutlined,
   PersonAddAlt1Outlined,
-  TrendingUpOutlined,
   PieChartOutlined,
   AccountBalanceWalletOutlined,
   PeopleOutlineOutlined,
@@ -89,7 +86,6 @@ const navItems = [
 ];
 
 const Sidebar = ({
-  user,
   drawerWidth,
   isSidebarOpen,
   setIsSidebarOpen,

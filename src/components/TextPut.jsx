@@ -1,17 +1,22 @@
-import { TextField, useTheme } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
+import { statusColors } from "../theme";
 
-const TextInput = ({ type, label }) => {
-  const theme = useTheme();
+const TextInput = ({ type, label, error, ...otherProps }) => {
   return (
-    <TextField
-      id="outlined-basic"
-      label={label}
-      variant="outlined"
-      type={type}
-      size="medium"
-      margin="normal"
-      fullWidth
-    />
+    <>
+      <TextField
+        id="outlined-basic"
+        label={label}
+        variant="outlined"
+        type={type}
+        size="medium"
+        margin="normal"
+        fullWidth
+        {...otherProps}
+        autoComplete="off"
+      />
+      <Typography sx={{ color: statusColors.danger }}>{error}</Typography>
+    </>
   );
 };
 

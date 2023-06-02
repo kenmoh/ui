@@ -5,7 +5,6 @@ import {
   Search,
   SettingsOutlined,
 } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
 import FlexxBetween from "../components/FlextBetween";
 import { toggleMode } from "../state";
 import profileImage from "../assets/profileImage.jpg";
@@ -19,9 +18,23 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { clearCredentials } from "../state/authSlice";
+import { useNavigate } from "react-router-dom";
+
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const theme = useTheme();
+  const {
+    userInfo: {
+      data: { user },
+    },
+  } = useSelector((state) => state.auth);
+  const handleLogout = () => {
+    dispatch(clearCredentials());
+    // navigate("/signin");
+  };
   return (
     <AppBar
       sx={{
@@ -60,11 +73,11 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             sx={{ objectFit: "cover", marginRight: "0.5rem" }}
           />
           <Typography sx={{ marginRight: "3rem", color: "#aaa" }}>
-            Hi Kenneth
+            Hi {user.username.toUpperCase()}
           </Typography>
           <Button
             sx={{ marginRight: "0.5rem", color: "#aaa", fontWeight: "bold" }}
-            onClick={() => console.log("Logout")}
+            onClick={handleLogout}
           >
             Logout
           </Button>

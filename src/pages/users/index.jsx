@@ -1,12 +1,19 @@
 import { Box, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 
-import { DataGrid } from "@mui/x-data-grid";
-import { useGetUsersQuery } from "../../state/api";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useGetUsersQuery } from "../../state/userApi";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { data, isLoading } = useGetUsersQuery();
+
+  const handleRowClick = (params) => {
+    const { id } = params.row;
+    navigate(`/users/${id}`);
+  };
 
   const columns = [
     { field: "email", headerName: "Email", minWidth: 100, flex: 1 },
@@ -79,7 +86,9 @@ const Users = () => {
           rows={data || []}
           columns={columns}
           getRowId={(row) => row.id}
-          checkboxSelection
+          slots={{ toolbar: GridToolbar }}
+          onRowClick={handleRowClick}
+          disableRowSelectionOnClick
         />
       </Box>
     </Box>

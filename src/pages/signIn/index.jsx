@@ -1,20 +1,118 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, Button } from "@mui/material";
-import Header from "../../components/Header";
+import { Controller, useForm } from "react-hook-form";
+import ProgressBar from "../../components/ProgressBar";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import TextInput from "../../components/TextPut";
+import { useLoginUserMutation } from "../../state/authAPI";
+import Header from "../../components/Header";
+import { setCredentials } from "../../state/authSlice";
+import AppNavLink from "../../components/AppNavLink";
+
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Please enter a valid email"),
+  password: yup.string().required("Password is required"),
+});
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+  const [loginUser, { isLoading, error }] = useLoginUserMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const handleLogin = async (user) => {
+    const data = new FormData();
+    data.append("username", user.email.trim());
+    data.append("password", user.password.trim());
+    const res = await loginUser(data);
+    if (!res.error) {
+      dispatch(setCredentials({ ...res }));
+    }
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (userInfo && !error) {
+      navigate("/");
+    }
+    if (error) {
+      toast.error(error.data.detail);
+    }
+  }, [navigate, userInfo, error]);
+
   return (
-    <Box m="1.5rem auto" width="30%" sx={{ flex: "column" }}>
-      <Header title="Login" />
-      <Box m="2rem auto">
-        <TextInput label="Email" type="email" />
-        <TextInput label="Password" type="password" />
-        <Button variant="contained" disableElevation fullWidth size="large">
-          Login
-        </Button>
-      </Box>
+    <Box
+      height="90vh"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyItems: "center",
+      }}
+    >
+      {isLoading ? (
+        <ProgressBar />
+      ) : (
+        <Box m="auto" width="22.5%">
+          <Header title="Login" />
+          <form onSubmit={handleSubmit(handleLogin)}>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  label="Email"
+                  onChange={onChange}
+                  value={value || ""}
+                  error={errors.email?.message}
+                />
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  label="Password"
+                  type="password"
+                  onChange={onChange}
+                  value={value || ""}
+                  error={errors.password?.message}
+                />
+              )}
+            />
+            <Box mt="1rem">
+              <Button
+                variant="contained"
+                disableElevation
+                fullWidth
+                size="large"
+                type="submit"
+              >
+                Login
+              </Button>
+            </Box>
+          </form>
+          <AppNavLink
+            route="/signup"
+            label="Register"
+            text={`Don't have an account`}
+          />
+        </Box>
+      )}
     </Box>
   );
 };

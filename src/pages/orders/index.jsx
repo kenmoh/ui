@@ -1,12 +1,20 @@
 import { Box, useTheme, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
-import { useGetOrdersQuery } from "../../state/api";
+
 import { statusColors } from "../../theme";
+import { useNavigate } from "react-router-dom";
+import { useGetOrdersQuery } from "../../state/orderApi";
 
 const Orders = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { data, isLoading } = useGetOrdersQuery();
+
+  const handleRowClick = (params) => {
+    const { id } = params.row;
+    navigate(`/orders/${id}`);
+  };
 
   const columns = [
     { field: "id", headerName: "ID", minWidth: 100, flex: 1 },
@@ -27,18 +35,18 @@ const Orders = () => {
           variant="inherit"
           sx={{
             backgroundColor:
-              params.value === "picked up"
+              params.value === "Picked up"
                 ? statusColors.pickedUp
-                : params.value === "received"
+                : params.value === "Received"
                 ? statusColors.success
                 : statusColors.pending,
             padding: "2px 20px",
             borderRadius: "50px",
             textTransform: "capitalize",
             color:
-              params.value === "picked up"
+              params.value === "Picked up"
                 ? statusColors.pickedUpTextConlor
-                : params.value === "received"
+                : params.value === "Received"
                 ? statusColors.successTextConlor
                 : statusColors.pendingTextConlor,
           }}
@@ -110,7 +118,8 @@ const Orders = () => {
           rows={data ? data.orders : []}
           columns={columns}
           getRowId={(row) => row.id}
-          checkboxSelection
+          onRowClick={handleRowClick}
+          slots={{ toolbar: GridToolbar }}
         />
       </Box>
     </Box>

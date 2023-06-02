@@ -1,13 +1,20 @@
 import { Box, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
-import { useGetWalletsQuery } from "../../state/api";
+import { useGetWalletsQuery } from "../../state/walletApi";
+import { useNavigate } from "react-router-dom";
 
 const Wallet = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { data, isLoading } = useGetWalletsQuery();
+
+  const handleRowClick = (params) => {
+    const { id } = params.row;
+    navigate(`/wallets/${id}`);
+  };
   const columns = [
-    { field: "id", headerName: "User Id", minWidth: 100, flex: 1 },
+    { field: "id", headerName: "Wallet Id", minWidth: 100, flex: 1 },
 
     {
       field: "user",
@@ -19,7 +26,7 @@ const Wallet = () => {
 
     {
       field: "balance",
-      headerName: "Balance",
+      headerName: "Balance (NGN)",
       minWidth: 100,
       flex: 1,
     },
@@ -55,7 +62,8 @@ const Wallet = () => {
           rows={data || []}
           columns={columns}
           getRowId={(row) => row.id}
-          checkboxSelection
+          onRowClick={handleRowClick}
+          slots={{ toolbar: GridToolbar }}
         />
       </Box>
     </Box>

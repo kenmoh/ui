@@ -1,12 +1,42 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { useGetWithdrawQuery } from "../../state/api";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import { toast } from "react-toastify";
+
 import Header from "../../components/Header";
 import { statusColors } from "../../theme";
+import {
+  useGetWithdrawalsQuery,
+  useWithdrawalCompleteMutation,
+} from "../../state/withdrawApi";
+import { useState } from "react";
+import FlexBetween from "../../components/FlextBetween";
 
 const Withdrawal = () => {
+  const [showIcon, setShowIcon] = useState(false);
+  const [rowId, setRowId] = useState("");
   const theme = useTheme();
-  const { data, isLoading } = useGetWithdrawQuery();
+  const { data, isLoading } = useGetWithdrawalsQuery();
+  const [markPaymentComplete] = useWithdrawalCompleteMutation({
+    refetchOnMountOrArgChange: true,
+  });
+
+  const handleRowClick = (params) => {
+    params.row.id;
+    setRowId(params.row.id);
+    setShowIcon(!showIcon);
+  };
+
+  const handleDelete = async () => {
+    const res = await markPaymentComplete(rowId);
+    if (res.data) {
+      toast.success("Payment Completed!");
+    } else {
+      toast.error(res.error.data.detail);
+    }
+  };
 
   const columns = [
     {
@@ -18,6 +48,12 @@ const Withdrawal = () => {
     {
       field: "withdrawal_amount",
       headerName: "Withrawal Amount (ngn)",
+      minWidth: 100,
+      flex: 1,
+    },
+    {
+      field: "company_name",
+      headerName: "Company Name",
       minWidth: 100,
       flex: 1,
     },
@@ -58,7 +94,17 @@ const Withdrawal = () => {
   ];
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="WITHDRAWALS" subtitle="Withdrawal History" />
+      <FlexBetween>
+        <Header title="WITHDRAWALS" subtitle="Withdrawal History" />
+
+        {showIcon && (
+          <Tooltip placement="left" title="Payment Complete">
+            <IconButton aria-label="delete" size="small" onClick={handleDelete}>
+              <CheckCircleOutlineSharpIcon fontSize="large" />
+            </IconButton>
+          </Tooltip>
+        )}
+      </FlexBetween>
       <Box
         mt="20px"
         sx={{
@@ -87,7 +133,9 @@ const Withdrawal = () => {
           rows={data || []}
           columns={columns}
           getRowId={(row) => row.id}
-          checkboxSelection
+          slots={{ toolbar: GridToolbar }}
+          onRowClick={handleRowClick}
+          disableRowSelectionOnClick
         />
       </Box>
     </Box>
