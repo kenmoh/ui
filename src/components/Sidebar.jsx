@@ -42,7 +42,7 @@ const navItems = [
     icon: <PeopleOutlineOutlined />,
   },
   {
-    name: "New",
+    name: "Profile",
     icon: <PersonAddAlt1Outlined />,
   },
 

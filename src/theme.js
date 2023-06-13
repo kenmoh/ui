@@ -2,11 +2,16 @@
 export const statusColors = {
   success: "#b9fbc0",
   danger: "#e94569",
+  delivered: "#87CEFA",
   pending: "#fae1dd",
   pickedUp: "#f1dca7",
   successTextConlor: "teal",
   pendingTextConlor: "brown",
   pickedUpTextConlor: "brown",
+  deliveredTextColor: "#1C39BB",
+};
+export const radialBackground = {
+  radialBgColor: "radial-gradient( circle farthest-side, #023e8a, #191f45 )",
 };
 export const tokensDark = {
   grey: {

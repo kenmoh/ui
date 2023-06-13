@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Container, Divider } from "@mui/material";
 import Header from "../../components/Header";
 import { useGetWalletQuery } from "../../state/walletApi";
 import { useParams } from "react-router-dom";
@@ -59,8 +59,8 @@ const WalletDetails = () => {
   ];
 
   return (
-    <>
-      <Box m="1.5rem 2.5rem">
+    <Container maxWidth="xl">
+      <Box m="1.5rem 0rem">
         <Header title="Wallet Details" subtitle="Dispatch Walle Details" />
         <Box
           marginTop={2}
@@ -84,10 +84,13 @@ const WalletDetails = () => {
               {data?.balance}
             </Typography>
           </Box>
-          <Typography>{data?.user.company_name.toUpperCase()}</Typography>
-          <Typography mt={1}>
-            {data?.user.company_reg_number.toUpperCase()}
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
+            <Typography>{data?.user.company_name.toUpperCase()}</Typography>
+            <Divider orientation="vertical" flexItem />
+            <Typography mt={1}>
+              {data?.user.company_reg_number.toUpperCase()}
+            </Typography>
+          </Box>
         </Box>
         <Box
           mt={2}
@@ -110,6 +113,7 @@ const WalletDetails = () => {
               color: theme.palette.secondary[100],
               borderTop: "none",
             },
+            width: "100%",
           }}
         >
           <DataGrid
@@ -121,7 +125,7 @@ const WalletDetails = () => {
           />
         </Box>
       </Box>
-    </>
+    </Container>
   );
 };
 

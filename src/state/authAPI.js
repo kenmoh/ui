@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const authApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://mohdelivery.up.railway.app/api",
+  }),
   reducerPath: "authApi",
   tagTypes: ["Auth"],
 
@@ -23,7 +25,20 @@ export const authApi = createApi({
 
       providesTags: ["Auth"],
     }),
+    recoverPassord: build.mutation({
+      query: (data) => ({
+        url: "/password/forgot-password",
+        method: "POST",
+        body: data,
+      }),
+
+      providesTags: ["Auth"],
+    }),
   }),
 });
 
-export const { useAddUserMutation, useLoginUserMutation } = authApi;
+export const {
+  useAddUserMutation,
+  useLoginUserMutation,
+  useRecoverPassordMutation,
+} = authApi;

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const orderApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/orders" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://mohdelivery.up.railway.app/api/orders" }),
   reducerPath: "orderApi",
   tagTypes: ["Order"],
 
@@ -9,6 +9,7 @@ export const orderApi = createApi({
     getOrder: build.query({
       query: (id) => `/${id}`,
       providesTags: ["Order"],
+      invalidatesTags: ["Order"],
     }),
   }),
 });

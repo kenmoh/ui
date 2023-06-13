@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const walletApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/wallets" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://mohdelivery.up.railway.app/api/wallets" }),
   reducerPath: "walletApi",
   tagTypes: ["Wallet"],
 

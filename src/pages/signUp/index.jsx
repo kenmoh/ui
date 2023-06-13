@@ -149,6 +149,11 @@ const SignUp = () => {
                 fullWidth
                 size="large"
                 type="submit"
+                sx={{
+                  padding: "12px 0px",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                }}
               >
                 Register
               </Button>

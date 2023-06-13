@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Container, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 import IconButton from "@mui/material/IconButton";
@@ -93,52 +93,59 @@ const Withdrawal = () => {
     },
   ];
   return (
-    <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="WITHDRAWALS" subtitle="Withdrawal History" />
+    <Container maxWidth="xl">
+      <Box m="1.5rem 0rem">
+        <FlexBetween>
+          <Header title="WITHDRAWALS" subtitle="Withdrawal History" />
 
-        {showIcon && (
-          <Tooltip placement="left" title="Payment Complete">
-            <IconButton aria-label="delete" size="small" onClick={handleDelete}>
-              <CheckCircleOutlineSharpIcon fontSize="large" />
-            </IconButton>
-          </Tooltip>
-        )}
-      </FlexBetween>
-      <Box
-        mt="20px"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-            fontSize: "16px",
-          },
-          "& .MuiDataGrid-columnHeader": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            fontWeight: "bold",
-            textTransform: "uppercase",
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-        }}
-      >
-        <DataGrid
-          loading={isLoading || !data}
-          rows={data || []}
-          columns={columns}
-          getRowId={(row) => row.id}
-          slots={{ toolbar: GridToolbar }}
-          onRowClick={handleRowClick}
-          disableRowSelectionOnClick
-        />
+          {showIcon && (
+            <Tooltip placement="left" title="Payment Complete">
+              <IconButton
+                aria-label="delete"
+                size="small"
+                onClick={handleDelete}
+              >
+                <CheckCircleOutlineSharpIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </FlexBetween>
+        <Box
+          mt="20px"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+              fontSize: "16px",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: "none",
+            },
+            width: "100%",
+          }}
+        >
+          <DataGrid
+            loading={isLoading || !data}
+            rows={data || []}
+            columns={columns}
+            getRowId={(row) => row.id}
+            slots={{ toolbar: GridToolbar }}
+            onRowClick={handleRowClick}
+            disableRowSelectionOnClick
+          />
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

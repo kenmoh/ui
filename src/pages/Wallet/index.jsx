@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useGetWalletsQuery } from "../../state/walletApi";
@@ -32,41 +32,44 @@ const Wallet = () => {
     },
   ];
   return (
-    <Box m="1.5rem 2.5rem">
-      <Header title="WALLETS" subtitle="Dispatch user wallets" />
-      <Box
-        mt="20px"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-            fontSize: "16px",
-          },
-          "& .MuiDataGrid-columnHeader": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            fontWeight: "bold",
-            textTransform: "uppercase",
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-        }}
-      >
-        <DataGrid
-          loading={isLoading || !data}
-          rows={data || []}
-          columns={columns}
-          getRowId={(row) => row.id}
-          onRowClick={handleRowClick}
-          slots={{ toolbar: GridToolbar }}
-        />
+    <Container maxWidth="xl">
+      <Box m="1.5rem 0rem">
+        <Header title="WALLETS" subtitle="Dispatch user wallets" />
+        <Box
+          mt="20px"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+              fontSize: "16px",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: "none",
+            },
+            width: "100%",
+          }}
+        >
+          <DataGrid
+            loading={isLoading || !data}
+            rows={data || []}
+            columns={columns}
+            getRowId={(row) => row.id}
+            onRowClick={handleRowClick}
+            slots={{ toolbar: GridToolbar }}
+          />
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

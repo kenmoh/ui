@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Button } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import ProgressBar from "../../components/ProgressBar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import ProgressBar from "../../components/ProgressBar";
 import TextInput from "../../components/TextPut";
 import { useLoginUserMutation } from "../../state/authAPI";
 import Header from "../../components/Header";
@@ -101,15 +101,25 @@ const SignIn = () => {
                 fullWidth
                 size="large"
                 type="submit"
+                sx={{
+                  padding: "12px 0px",
+                  backgroundColor: "#6d9dc5",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  marginTop: "1.5rem",
+                }}
               >
                 Login
               </Button>
             </Box>
           </form>
+          <Box display="flex" justifyContent="end">
+            <AppNavLink route="/forgot-password" label="Recover Password" />
+          </Box>
           <AppNavLink
             route="/signup"
             label="Register"
-            text={`Don't have an account`}
+            text={`Don't have an account ?`}
           />
         </Box>
       )}

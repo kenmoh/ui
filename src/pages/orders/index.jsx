@@ -1,4 +1,4 @@
-import { Box, useTheme, Typography } from "@mui/material";
+import { Box, useTheme, Typography, Container } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 
@@ -9,7 +9,9 @@ import { useGetOrdersQuery } from "../../state/orderApi";
 const Orders = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const { data, isLoading } = useGetOrdersQuery();
+  const { data, isLoading } = useGetOrdersQuery({
+    refetchOnMountOrArgChange: true,
+  });
 
   const handleRowClick = (params) => {
     const { id } = params.row;
@@ -39,6 +41,8 @@ const Orders = () => {
                 ? statusColors.pickedUp
                 : params.value === "Received"
                 ? statusColors.success
+                : params.value === "Delivered"
+                ? statusColors.delivered
                 : statusColors.pending,
             padding: "2px 20px",
             borderRadius: "50px",
@@ -48,6 +52,8 @@ const Orders = () => {
                 ? statusColors.pickedUpTextConlor
                 : params.value === "Received"
                 ? statusColors.successTextConlor
+                : params.value === "Delivered"
+                ? statusColors.deliveredTextColor
                 : statusColors.pendingTextConlor,
           }}
         >
@@ -88,41 +94,44 @@ const Orders = () => {
   ];
 
   return (
-    <Box m="1.5rem 2.5rem">
-      <Header title="Orders" subtitle="All orders" />
-      <Box
-        mt="20px"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-            fontSize: "16px",
-          },
-          "& .MuiDataGrid-columnHeader": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            fontWeight: "bold",
-            textTransform: "uppercase",
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-        }}
-      >
-        <DataGrid
-          loading={isLoading || !data}
-          rows={data ? data.orders : []}
-          columns={columns}
-          getRowId={(row) => row.id}
-          onRowClick={handleRowClick}
-          slots={{ toolbar: GridToolbar }}
-        />
+    <Container maxWidth="xl">
+      <Box m="1.5rem 0rem">
+        <Header title="Orders" subtitle="All orders" />
+        <Box
+          mt="20px"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+              fontSize: "16px",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: "none",
+            },
+            width: "100%",
+          }}
+        >
+          <DataGrid
+            loading={isLoading || !data}
+            rows={data ? data.orders : []}
+            columns={columns}
+            getRowId={(row) => row.id}
+            onRowClick={handleRowClick}
+            slots={{ toolbar: GridToolbar }}
+          />
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

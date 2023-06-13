@@ -3,11 +3,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const dataString = localStorage.getItem("userInfo");
 const jsonData = JSON.parse(dataString);
 
-const { data } = jsonData;
+const { data } = jsonData || '';
 
 export const withdrawApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000/api/withdrawals",
+    baseUrl: "https://mohdelivery.up.railway.app/api/withdrawals",
     headers: {
       Authorization: `Bearer ${data?.accessToken}`,
     },

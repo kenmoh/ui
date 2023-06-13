@@ -1,17 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const dataString = localStorage.getItem("userInfo");
-const data = JSON.parse(dataString);
+// const dataString = localStorage.getItem("userInfo");
+// const data = JSON.parse(dataString);
 
-const {
-  data: { accessToken },
-} = data;
+
+
+// const {
+//   data: { accessToken },
+// } = data ;
+const dataString = localStorage.getItem("userInfo");
+const jsonData = JSON.parse(dataString);
+
+const { data } = jsonData || '';
 
 export const userApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000/api/users",
+    baseUrl: "https://mohdelivery.up.railway.app/api/users",
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${data?.accessToken}`,
     },
   }),
 
@@ -19,7 +25,7 @@ export const userApi = createApi({
   tagTypes: ["User"],
 
   endpoints: (build) => ({
-    getUsers: build.query({ query: () => "/", providesTags: ["User"] }),
+    getUsers: build.query({ query: () => "/", providesTags: ["User"], invalidatesTags: ["User"],}),
     getUser: build.query({
       query: (id) => `/${id}`,
       providesTags: ["User"],

@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 const Users = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const { data, isLoading } = useGetUsersQuery();
+  const { data, isLoading } = useGetUsersQuery({
+    refetchOnMountOrArgChange: true,
+  });
 
   const handleRowClick = (params) => {
     const { id } = params.row;
@@ -56,42 +58,44 @@ const Users = () => {
     },
   ];
   return (
-    <Box m="1.5rem 2.5rem">
-      <Header title="USERS" subtitle="List of users" />
-      <Box
-        mt="20px"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-            fontSize: "16px",
-          },
-          "& .MuiDataGrid-columnHeader": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            fontWeight: "bold",
-            textTransform: "uppercase",
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-        }}
-      >
-        <DataGrid
-          loading={isLoading || !data}
-          rows={data || []}
-          columns={columns}
-          getRowId={(row) => row.id}
-          slots={{ toolbar: GridToolbar }}
-          onRowClick={handleRowClick}
-          disableRowSelectionOnClick
-        />
+    <Container maxWidth="xl">
+      <Box m="1.5rem 0rem">
+        <Header title="USERS" subtitle="List of users" />
+        <Box
+          mt="20px"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+              fontSize: "16px",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: "none",
+            },
+          }}
+        >
+          <DataGrid
+            loading={isLoading || !data}
+            rows={data || []}
+            columns={columns}
+            getRowId={(row) => row.id}
+            slots={{ toolbar: GridToolbar }}
+            onRowClick={handleRowClick}
+            disableRowSelectionOnClick
+          />
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
