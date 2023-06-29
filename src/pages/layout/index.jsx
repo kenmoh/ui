@@ -27,7 +27,7 @@ const Layout = () => {
       </Box>
     </Box>
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/dashboard" />
   );
 };
 

@@ -65,7 +65,7 @@ const WalletDetails = () => {
         <Box
           marginTop={2}
           sx={{
-            width: "20rem",
+            width: "30rem",
             backgroundColor: theme.palette.background.alt,
             padding: "1rem",
             borderRadius: "0.25rem",

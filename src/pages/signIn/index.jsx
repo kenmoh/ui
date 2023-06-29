@@ -66,7 +66,12 @@ const SignIn = () => {
       {isLoading ? (
         <ProgressBar />
       ) : (
-        <Box m="auto" width="22.5%">
+        <Box
+          m="auto"
+          sx={{
+            width: { xs: "90%", md: "22.5%" },
+          }}
+        >
           <Header title="Login" />
           <form onSubmit={handleSubmit(handleLogin)}>
             <Controller

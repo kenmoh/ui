@@ -12,13 +12,13 @@ import {
   Toolbar,
   Typography,
   useTheme,
-  Stack,
 } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
-import AppImage from "../../assets/3d_delivery.png";
+import AppImage from "../../assets/group.png";
 import HowItWorks from "../../components/HowItWorks";
+import StoreBtn from "../../components/StoreBtn";
 
 const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
@@ -62,12 +62,12 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             >
               Contact Us
             </Button>
-            <Button
+            {/* <Button
               sx={{ marginRight: "0.5rem", color: "#eee", fontWeight: "bold" }}
               onClick={console.log("Login")}
             >
               About
-            </Button>
+            </Button> */}
             <Button
               sx={{
                 marginRight: "0.5rem",
@@ -130,34 +130,15 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 everything in between, we've got you covered.
               </Typography>
 
-              <Box display="flex" flexWrap="wrap" gap={5}>
-                <Button
-                  variant="contained"
-                  startIcon={<AndroidIcon />}
-                  sx={{
-                    padding: "1rem 3rem",
-                    backgroundColor: "#6d9dc5",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    marginTop: "1.5rem",
-                  }}
-                >
-                  Google Play
-                </Button>
-
-                <Button
-                  variant="contained"
-                  startIcon={<AppleIcon />}
-                  sx={{
-                    padding: "1rem 3rem",
-                    backgroundColor: "#6d9dc5",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    marginTop: "1.5rem",
-                  }}
-                >
-                  PlayStore
-                </Button>
+              <Box display="flex" flexWrap="wrap" gap={1}>
+                <StoreBtn
+                  icon={<AndroidIcon sx={{ fontSize: "2.5rem" }} />}
+                  text="Play Store"
+                />
+                <StoreBtn
+                  icon={<AppleIcon sx={{ fontSize: "2.5rem" }} />}
+                  text="App Store"
+                />
               </Box>
             </Box>
           </Grid>
@@ -207,7 +188,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
         />
         <HowItWorks
           number="04"
-          description="  As a vendr, when the delivery status of your item is marked as DELIVERED, ensure you confirm with the receipient before clicking on the RECEIVED BUTTON."
+          description="  As a vendor, when the delivery status of your item is marked as DELIVERED, ensure you confirm with the receipient before clicking on the RECEIVED BUTTON."
         />
         <HowItWorks
           number="05"

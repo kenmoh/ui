@@ -80,7 +80,7 @@ const navItems = [
     icon: <CalendarMonthOutlined />,
   },
   {
-    name: "Overview",
+    name: "Yearly",
     icon: <PieChartOutlined />,
   },
 ];

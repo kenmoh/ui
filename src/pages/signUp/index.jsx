@@ -87,7 +87,12 @@ const SignUp = () => {
       {isLoading ? (
         <ProgressBar />
       ) : (
-        <Box m="auto" width="22.5%">
+        <Box
+          m="auto"
+          sx={{
+            width: { xs: "90%", md: "22.5%" },
+          }}
+        >
           <Header title="Sing up" subtitle="Create a new account" />
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller

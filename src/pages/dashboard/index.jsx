@@ -1,6 +1,5 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 import Header from "../../components/Header";
-import FlexBetween from "../../components/FlextBetween";
 
 import {
   PeopleOutlineOutlined,
@@ -8,10 +7,16 @@ import {
   MonetizationOnOutlined,
 } from "@mui/icons-material";
 import CountCard from "../../components/CountCard";
+import { useGetStatsQuery } from "../../state/statsApi";
+import OverviewChart from "../../components/OverviewChart";
 
 const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  const { data } = useGetStatsQuery({
+    refetchOnMountOrArgChange: true,
+  });
+
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="DASHBOARD" subtitle="Admin Dashboard" />
@@ -25,8 +30,16 @@ const Dashboard = () => {
           "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
         }}
       >
-        <CountCard icon={<PeopleOutlineOutlined />} title="Users" count={300} />
-        <CountCard icon={<ReorderOutlined />} title="Orders" count={220} />
+        <CountCard
+          icon={<PeopleOutlineOutlined />}
+          title="Users"
+          count={data?.users || 0}
+        />
+        <CountCard
+          icon={<ReorderOutlined />}
+          title="Orders"
+          count={data?.total_orders || 0}
+        />
         <Box
           gridColumn="span 8"
           gridRow="span 2"
@@ -34,17 +47,17 @@ const Dashboard = () => {
           p="1rem"
           borderRadius="0.5rem"
         >
-          Chart Here
+          <OverviewChart />
         </Box>
         <CountCard
           icon={<MonetizationOnOutlined />}
           title="Revenue"
-          count={250}
+          count={data?.total_revenue || 0}
         />
         <CountCard
           icon={<PeopleOutlineOutlined />}
           title="Pending Orders"
-          count={200}
+          count={data?.pending_orders || 0}
         />
       </Box>
     </Box>

@@ -19,20 +19,19 @@ const UserDetails = () => {
   const theme = useTheme();
   const handleSuspension = async () => {
     const res = await suspendUser(params.id);
-    if (res.data.is_suspended) {
+    console.log(res.data);
+    if (res?.data?.is_suspended) {
       toast.warning(
         `${
-          res.data.username
-            ? res.data.username.toUpperCase()
-            : res.data.company_name.toUpperCase()
+          res.data?.username.toUpperCase() ||
+          res.data?.company_name.toUpperCase()
         } account deactivated!`
       );
-    } else if (!res.data.is_suspended) {
+    } else if (!res.data?.is_suspended) {
       toast.success(
         `${
-          res.data.username
-            ? res.data.username.toUpperCase()
-            : res.data.company_name.toUpperCase()
+          res.data?.username.toUpperCase() ||
+          res.data?.company_name.toUpperCase()
         } account activated!`
       );
     } else {
@@ -49,7 +48,7 @@ const UserDetails = () => {
       </Box>
       <Box
         sx={{
-          width: "30rem",
+          width: { xs: "90%", md: "30%" },
           backgroundColor: theme.palette.background.alt,
           padding: "1.5rem",
           borderRadius: ".5rem",
@@ -164,12 +163,12 @@ const UserDetails = () => {
                   sx={{
                     backgroundColor: statusColors.pending,
                     color: statusColors.pendingTextConlor,
-                    width: "3rem",
+                    padding: ".15rem .75rem",
                     textAlign: "center",
                     borderRadius: "5rem",
                   }}
                 >
-                  Yes
+                  Suspended
                 </Typography>
               </>
             ) : (
@@ -180,12 +179,12 @@ const UserDetails = () => {
                   sx={{
                     backgroundColor: statusColors.success,
                     color: statusColors.successTextConlor,
-                    width: "3rem",
                     textAlign: "center",
                     borderRadius: "5rem",
+                    padding: ".15rem .75rem",
                   }}
                 >
-                  No
+                  Active
                 </Typography>
               </>
             )}

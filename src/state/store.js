@@ -10,6 +10,7 @@ import authReducer from "./authSlice";
 import { orderApi } from "./orderApi";
 import { walletApi } from "./walletApi";
 import { withdrawApi } from "./withdrawApi";
+import { statsApi } from "./statsApi";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     [orderApi.reducerPath]: orderApi.reducer,
     [walletApi.reducerPath]: walletApi.reducer,
     [withdrawApi.reducerPath]: withdrawApi.reducer,
+    [statsApi.reducerPath]: statsApi.reducer,
     auth: authReducer,
   },
   middleware: (getDefault) =>
@@ -27,7 +29,8 @@ export const store = configureStore({
       authApi.middleware,
       orderApi.middleware,
       walletApi.middleware,
-      withdrawApi.middleware
+      withdrawApi.middleware,
+      statsApi.middleware
     ),
   //   middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat([])
   devTools: true,

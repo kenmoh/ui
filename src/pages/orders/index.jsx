@@ -12,7 +12,7 @@ const Orders = () => {
   const { data, isLoading } = useGetOrdersQuery({
     refetchOnMountOrArgChange: true,
   });
-
+  
   const handleRowClick = (params) => {
     const { id } = params.row;
     navigate(`/orders/${id}`);
@@ -123,7 +123,7 @@ const Orders = () => {
         >
           <DataGrid
             loading={isLoading || !data}
-            rows={data ? data.orders : []}
+            rows={data || []}
             columns={columns}
             getRowId={(row) => row.id}
             onRowClick={handleRowClick}

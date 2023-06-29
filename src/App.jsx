@@ -15,7 +15,7 @@ import Users from "./pages/users";
 import Profile from "./pages/profile";
 import Monthly from "./pages/monthly";
 import Daily from "./pages/daily";
-import Overview from "./pages/overview";
+import Yeaaly from "./pages/yearly";
 import UserDetails from "./pages/userDetail";
 import WithdrawalDetails from "./pages/withdrawalDetails";
 import OrderDetails from "./pages/orderDetails";
@@ -48,7 +48,7 @@ const App = () => {
               <Route path="/withdrawals" element={<Withdrawal />} />
               <Route path="/users" element={<Users />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/overview" element={<Overview />} />
+              <Route path="/yearly" element={<Yeaaly />} />
               <Route path="/monthly" element={<Monthly />} />
               <Route path="/daily" element={<Daily />} />
               <Route path="/users/:id" element={<UserDetails />} />
